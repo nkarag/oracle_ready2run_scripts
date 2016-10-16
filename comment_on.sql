@@ -1,0 +1,1 @@
+-- comment_on.sql--		Description: just print the beginning of a comment--		   (only to be used within another SQL*Plus script and not as stand alone script)/*

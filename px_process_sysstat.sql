@@ -1,0 +1,1 @@
+select * from GV$PX_PROCESS_SYSSTAT;

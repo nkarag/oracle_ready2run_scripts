@@ -1,0 +1,1 @@
+@?/rdbms/admin/awrsqrpt.sql

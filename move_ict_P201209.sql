@@ -1,0 +1,14 @@
+alter table ict_dw.ict_usage_fct move subpartition P20120907S0016 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120908S0010 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120911S0016 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120914S0016 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120915S0010 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120916S0008 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120917S0017 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120918S0016 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120919S0016 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120920S0016 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120921S0016 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120923S0008 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120927S0016 parallel 16 compress for query high update indexes;
+alter table ict_dw.ict_usage_fct move subpartition P20120928S0016 parallel 16 compress for query high update indexes;

@@ -1,0 +1,1 @@
+alter system set resource_manager_plan='&PLAN' scope=memory sid='*';

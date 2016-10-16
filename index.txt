@@ -1,0 +1,247 @@
+*******************************************
+( Scripts Index )
+
+(C) Nikos Karagiannidis - http://oradwstories.blogspot.com
+*******************************************
+
+Script_Name						Description
+------------					-------------
+archlog_size					Show the number of archived logs and their size per day (day of first change in the log) and hour of change
+								It shows if the logs per day have been deleted from the archiving destination na dhow much space is remaining
+as								Show active sessions
+as_long							Show active session running longer than h hours
+ash_events						Returns from Active Session History, for a specific sql id, the most-waited Wait Events, for the last N minutes.
+ash_events_awr					Analysis of wait events for the last N hours from a timepoint T for a specific sql_id from dba_hist_active_sess_history
+ash_events_sess					Analysis of wait events for the last N minutes for a specific session
+ash_ops							Returns from Active Session History, for each operation of an execution plan, for a specific sql id,
+								the DB time consumed, as well as the Wall-Clock time consumed, for the last N minutes.
+ash_ops_awr						Analysis of execution plan operations for the last N hours from a timepoint T for a specific sql_id from dba_hist_active_sess_history
+ash_top10_events_allsess		Find top 10 wait events for ALL sessions for the specified time period
+ash_top100_cpu					Find top 100 sessions on CPU in the last 5 minutes
+ash_top100sql_cpu				Find top 100 sql_ids on CPU in the last 5 minutes
+ash_top100_io					Find top 100 sessions on 'User I/O' wait class in the last 5 minutes
+ash_top100sql_io				Find top 100 sql_ids on 'User I/O' wait class in the last 5 minutes
+ash_top100_waiting				Find top 100 sessions waiting and not on 'User I/O' in the last 5 minutes
+ash_top100sql_waiting			Find top 100 sql_ids waiting and not on 'User I/O' in the last 5 minutes
+ash_top100_sess					Find top 100 sessions (ordered desc by total) either by CPU usage, I/O or  wait time in the last 5 minutes
+ash_top100_sess_wclass			Find top 100 sessions (ordered desc by total) either by CPU usage, or wait class in the last 5 minutes
+ash_top100_sql					Find top 100 sql_ids (ordered desc by total) either CPU usage, I/O or  wait time in the last 5 minutes
+awr_g_text						Generate AWR report for all RAC instances between 2 snapshots in text format. Use the "fsnapshot" script to find the right snapshot.
+awr_text						Generate AWR report for a specific instance between 2 snapshots in text format. Use the "fsnapshot" script to find the right snapshot.
+awr_g_html						Generate AWR report for all RAC instances between 2 snapshots in html format. Use the "fsnapshot" script to find the right snapshot.
+awr_html						Generate AWR report for a specific instance between 2 snapshots in html format. Use the "fsnapshot" script to find the right snapshot.
+awr_sql_report					Generate an AWR report for a specific sql_id (AWR SQL Report) for a specific time period (AWR snapshots). It is useful 
+								  for highlighting execution plan changes and resource consumption variation during a period of time for a specific SQL statement.
+								  The script simply calls Oracle script: @?/rdbms/admin/awrsqrpt.sql
+autotask_check					Check execution of autotasks from DBA_AUTOTASK_CLIENT
+comment_on						Simply prints the beginning of a comment "/*". It is used by the if.sql script.
+connect2exa						Connect to Exadata as nkarag
+consumer_groups					Show totals for sessions running per consumer group
+consumer_groups_metrics			Show consumer group metrics (e.g., CPU allocation) from gv$rsrc_consumer_group
+cto_wait						Check status of CTO_MAIN (if it is waiting for some other flow)
+delistagg						De-listagg: returns a list of elements separated by a delimiter and converts it to rows (one row for each element)
+dplan							Display the execution plan of a specific cursor in the shared pool (sql_id, child_no)
+dplan_awr
+etl_fl_exec_now					Find all major flows executing NOW		
+etl_map_exec_now				Find mappings/procedures/functions executing NOW for a specific Major Flow 			
+flashback_on					Retuns if FLASHBACK database is turned on (from V$DATABASE)
+flashback_info					Retuns info regarding flashback database such as: how back in time we can go, current size of flashback data,
+								est. size for the retention target. It is based on v$flashback_database_log.
+flock							Find all locks held or requested by a specific session or username (from gv$lock)
+flock_pair						Find lock (waiter and holder pair from gv$lock)
+flongops						Find long operations and estimated time to finish from GV$SESSION_LONGOPS.
+fosproc							Find OS process for a specific session (you might need it in the case you want to kill a process from OS:
+									 kill -9 spid (in Unix), orakill $ORACLE_SID spid (in Windows)
+ftf								Find Trace File for the current session (query V$DIAG_INFO). It applies only to >= 11g
+ftf_10g							Find Trace File for the current session. It applies only to <= 10g
+ftf_map2sess					Find Trace File. Map sid to the corresponding trace file. It can be used to track the trace file of another session (RAC enabled).
+fs								Find SQL
+fs_awr							Find SQL in DBA_HIST_SQLSTAT
+fsqltext						Returns the sql text for a given sql_id (from memory - aka shared pool)
+fsqltext_awr					Returns the sql text for a given sql_id (from AWR)
+fs_plans						Find all the available plans for a specific SQL_ID
+fsegment						Find the segment from the file id and block id (from dba_extents)
+fsess							Find session by username (from GV$SESSION). Report break on sql_id and count of total sessions per sql_id.
+fsess_ash						Find session by username or sid (from GV$_ACTIVE_SESS_HISTORY) in active session history and check for 5 minutes all samples.
+fsess_awr						Find session by username (from DBA_HIST_ACTIVE_SESS_HISTORY). Report break on sql_id and count of 
+								total sessions per sql_id. You get all samples within 20 secs of a specific timestamp.
+fsess_owb						Find sessions invoked by Oracle Warehouse Builder (OWB) and show GV$SESSION info combined
+								with owbsys.all_rt_audit_executions info.
+fsess_blockers					Find session blockers from GV$SESSION_BLOCKERS.								
+fsess_wait						Find all wait events waited by this session (from GV$SESSION_EVENT). Ordered DESC by TIME_WAITED
+fsess_wait_now					Find where a session is waiting for (from GV$SESSION) this moment. Input you give the sid.
+fsess_wait_all_now				Find where all session are waiting right now - from gv$session_wait.(I have excluded idle class events).
+fsess_wait_top10				Find the top 10 wait events of a session (from gv$session_event). Input you give the sid.
+fsnapshot						Find an AWR snapshot. You provide as input a time point of interest.
+fspbaseline						Find the SQL Plan Baseline  plans (all plans ACCEPTED or not) for a specific sql_id. (uses sql_text singature)
+fsqlprofile						Find the SQL Profile for a specific sql_id. (uses sql_text singature)
+fsqlid (check also sqltext2sqlid) 	Generate the sql_id of a specific sql text. Must run as sysdba (but you can run it on any database. 
+									Remember that SQL_IDs are the same on all databases irrespective of database version!) 
+fsx								Find SQL and report whether it was Offloaded and % of I/O saved
+if								Script to achieve conditional execution (i.e., branching) within an sqlplus script. It is meant to be used
+								within another script (where conditional execution is required) and NOT as a stand alone script.
+								(See script st_histogram.sql, or branching.sql for an example)
+get_heavy_queries_awr			Get heavy queries based on dba_hist_sqlstat
+get_heavy_queries_mysqlhist		Get heavy queries based on my monitor_dw.sql_history table.
+get_heavy_queries_gvsql			Get heavy queries based on gv$sql (shared pool).
+gmysid							Get my sid. Returns the current session's sid and serial.
+gmysid_rac						Get my sid for RAC. Returns the current session's sid, serial and instance (for RAC)
+latch_cbc						Get the objects that we have the most Cache Buffer Chain (cbc) latch waits on. 
+								(Must be run as sys cause it accesses x$ tables)
+lcp								Show the Library Cache Pins and Locks (not for RAC). Must be run as sys cause it accesses x$ tables
+lcl								Show the Library Cache Pins and Locks (not for RAC). Must be run as sys cause it accesses x$ tables
+lib_cache_locks					Library Cache Locks : show blockers and waiters (from Kylie H script) - works for RAC. Must be run as sys cause it accesses x$ tables
+lib_cache_locks_objs			Shows which objects and by what user are locked in the library cache.
+								(Oracle Reference Doc:)V$ACCESS displays information about locks that are currently imposed on library cache objects. The locks are imposed to ensure that they are not aged out of the library cache while they are required for SQL execution.
+mons							Monitor SQL. You give sql_id as input and DBMS_SQLTUNE.REPORT_SQL_MONITOR is called to spool an html file with the sql monitoring report. 
+								Chrome browser is then invoked to show the report
+mytkprof.txt					Template for tkprof command.
+mystat							Display the value for a specific statistic from v$mystat
+mystat2							You run this after mystat in order to calculate the diff for a specific statistic with respect to mystat.
+mystat_cell						Display the value of selected 'cell%' statistics from v$mystat related to Exadata offloading.
+nmr_wait						Check the status of KPIDW_MAIN (if it is waiting for some other main flow).
+nmrd_alert						Returns NMR KPIs (from daily NMR report) hose value deviates significantly.
+nmrw_alert						Returns NMR KPIs (from weekly NMR report) hose value deviates significantly.
+null							Just an empty file. It is used by the if.sql script.
+offload_percent					Caclulate % of long running statements that were offloaded.
+owb_critical_path				Find the Critical Path(CP) of OWB flow
+owb_execs						Find the execution history of a specific node (leaf node or subflow) and remaining time until the end of main flow or other node
+owb2sqlid						Find the sql_id for a specific (optional) OWB mapping or procedure (essentially a leaf node in an OWB flow)
+owb_flowtree_xtime				Get statistics on execution times for the whole tree of a flow
+owb_inlock						Find OWB nodes (mappings or procedures) that are waiting on a lock (wait classes: application or concurrecy or configuration)
+								from GV$SESSION for more that 15 minutes.
+owb_inwait.sql					Returns sessions from PERIF, ETL_DW users that are currently waiting more than 15 minutes in an event that 
+								belongs to a wait class other than 'User I/O' and 'Idle' and 'Network'.
+owb_pa							This script outputs the OWB mappings/procedures of specific flows that are in need of tuning.	
+								owb_pa corresponds to the most recent version (i.e., is a copy of owb_pa_vN, where N is the maximum among all versions)
+owb_pa_mviews					This script outputs the Mviews of a specific flow that are the most time consuming during refresh. 
+								It assumes that owb_pa.sql script has been executes first (read comments in the script header).
+owbtopn_dbtime					Find TOP N OWB nodes with the most DB time (cumulative) in the history of interest (from DBA_HIST_ACTIVE_SESS_HISTORY)
+owbtopn_dbtimepx				Find the TOP N OWB nodes with the most average DB time **per execution** in the history of interest (from DBA_HIST_ACTIVE_SESS_HISTORY).
+								Optionally you can specify a specific sql_id to get the metrics for a specific statement.
+owbtopn_xtimepx					Find top N OWB nodes with the most **average** (wall-clock) execution time. You can also select the mappings of a specific Main Flow only, or
+									only for critical or non-critical flows. It then tries to join through DBA_PROCEDURES to DBA_HIST_ACTIVE_SESS_HISTORY in order to get the 
+									corresponding SQL_ID.
+owbtopn_xtime					Find TOP N OWB nodes with the most (wall-clock) execution time in the history of interest (from owbsys.all_rt_audit_executions)
+								e.g., Show me the top 10 heaviest mappings of SOC_DW_MAIN for all executions 30 days back from 12/03/2014
+parms							Display parameters and values.
+parmsd							Display parameters and descriptions
+pool_mem						Show sizes of SGA memory pools from V$SGASTAT
+px_downgrade					Get downgrade of parallel operations
+px_process_sysstat				select * from GV$PX_PROCESS_SYSSTAT
+px_check						Check parallel servers in use for all instances
+px_cnt							Count parallel process (in use) for a specific username, or sql_id (from gv$PX_PROCESS)
+px_get_dop_sess					Get the DOP as well as the Requested DOP from GV$PX_SESSION for a specific session
+px_get_dop_sql					Get the DOP as well as the Requested DOP from GV$PX_SESSION for a specific sql_id
+px_get_dop_sqlmon				Get the DOP from GV$SQL_MONITOR for a specific sql_id (PX_MAXDOP: Maximum degree of parallelism for any plan operation executed on behalf of the monitored SQL)
+resmgr_ap						Show Resource Manager active plans in all instances (from GV$RSRC_PLAN)
+resmgr_cp						Change Resource Manager plan in all instances (does an alter system for init param resource_manager_plan,
+								with scope=memory and sid='*')
+rman_sess						Monitor RMAN sessions and relevant OS processes								
+rollback_t						Estimate how much time is remaining for all sessions of a sql_id to rollback (You can use it for a specific session too)
+set_tf_ident					Set tracefile_identifier parameter. So that your tracefile becomes: {instance name}_{process name}_{process id}_{tracefile identifier}.trc
+ses_opt_env						Get optimizer enviroinment for a specific session (use GV$SES_OPTIMIZER_ENV)
+snapper							Tanel Poder's snapper tool!
+sql_monitor						Monitor the execution of an sql through gv$sql_monitor for a specific sql_id.
+sql_opt_env						Get optimizer enviroinment for a specific sql cursor (use GV$SQL_OPTIMZER_ENV)
+sqlid2owb						Find the OWB mapping or procedure (essentially a leaf node in an OWB flow) for a specific (optional) sql_id
+sqlid_compute_func				Function to compute the sql_id for a given sql text (in CLOB). (From Carlos Sierra)
+sqlplus_settings_store			Store current sqlplus settings to a file named "sqlplus_settings.sql"
+sqlplus_get_settings			Retrieve sqlplus setting from a file named sqlplus_settings.sql
+sqltext2sqlid					Computes the sql_id for a given sql_text. It is based on a custom function that must be created first.(see script sqlid_compute_func)
+sqltune_autotune_recoms			Returns sqltune autotask recommendations. It is outer joined with DBA_SQL_PROFILES to show the created sql profiles
+								You can also get recommendations for a specific sql_id
+sqltune_drop_task				Drop a tuning task
+sqltune_exec					Tune a specific sql_id by creating a tuning task and calling DBMS_SQLTUNE.EXECUTE_TUNING_TASK
+								(Note: you must login to the same instance as the one running the sql_id because the script assumes the sql_id is loaded in the library cache)
+sqltune_exec_awr				Tune a specific sql_id (not available the V@SQLAREA but in AWR) by creating a tuning task and 
+								calling DBMS_SQLTUNE.EXECUTE_TUNING_TASK									
+sqltune_exec_sqltxt				Tune a specific sql text by creating a tuning task and calling DBMS_SQLTUNE.EXECUTE_TUNING_TASK
+st_col_cardinality.sql			Returns the cardinality (i.e., number of rows) for a specific value of a specific column of a table. 
+								Essentially, it returns "what the optimizer thinks" (based on statistics - histograms or not) that the 
+								frequency for the specific value is.It is used in order to check the correctness of the optimizer frequency 
+								calculation for a specific value.
+st_histogram					Shows histogram status for a specific column of a table from DBA_TAB_COL_STATISTICS. Then allows the creation or deletion of a histogram for
+								the specific column.
+st_histogram_det				Returns histogram details for a specific column of a table (from DBA_TAB_HISTOGRAMS). 								
+sqltune_fplan					Force the plan for a specific sql_id. Loads the plan into an SQL Plan Baseline (thus works for 11g and above only).
+sqltune_mplan					Modify the plan of a sql_id (original) by providing a new plan coming from a modified version (usually with hints) of the original sql_id.
+									Input the "original sql_id", the "modified sql_id" and the "new plan" hash value. It is based on Carlos Sierras' script.
+sqltune_ufplan_all				Unforce all ACCEPTED plans  for a specific sql_id. Input the sql_id. It drops the
+									corresponding plan from the SQL Plan Baseline (thus works for 11g and above only).				
+sqltune_ufplan					Unforce a specific plan for a specific sql_id. Input the SQL_HANDLE and PLAN_NAME from dba_sql_plan_baselines. 
+								It drops the corresponding plan from the SQL Plan Baseline (thus works for 11g and above only).				
+sqltune_report					Report of the results of a sql tuning task (including recommendations with respective sql statements)
+sqltune_rec_sqlprofs			Get recommendations for SQL Profiles for a specific SQL_ID or all (estimated benefit also appears).
+sqltune_sqlprofs				Get all sql_profiles in descending order of creation. The DBA_SQL_PROFILES is joined with DBA_ADVISOR_OBJECTS in order
+								to get the sql_id related to the SQL_PROFILE
+spool2csv						Generates an sqlplus script and then runs it that spools a specific table to a CSV file.
+ss.sh							runs script how_many times in background via nohup
+stats_check						Check execution of ORacle automatic stats gathering job (from DBA_AUTOTASK_JOB_HISTORY)
+stats_check_usage				Check execution of jobs for collecting stats (concurrenlty) on ICT_DW.ICT_USAGE_FCT and TARGET_DW.USAGE_FCT
+stats_stale_list				Spools into file "stale_stats_segments.spool" and lists on screen the segments with stale statistics 
+								(because of failure of the automatic oracle job for gathering statistics)
+stats_gath_gen					Spools into file "gather_stats.spool", gather_table_stats commands for all tables with stale stats.
+stats_gath_exec					Gathers stats from tables with stale statistics.
+stats_px_mon					Monitor parallel execution of stats gathering (task_name is hard-coded in the script).
+stats_px_chunks_mon				Monitor each chunk processed in parallel execution of stats gathering
+stats_inc_check					Check if incremental statistics gathering is used for a specific table
+stats_inc_enabled				Check if incremental statistics gathering is enabled for a specific table
+stats_no_inc					List of partitioned tables where incremental statistics gathering is not used
+stats_no_inc_size				List of partitioned tables where incremental statistics gathering is not used joined with table total size
+tbs_mon							Monitor tablespace space (order desc be free MBs)
+temp_mon						Monitor temp tablespace usage (shows temp space usage per RAC instance)
+temp_mon_per_inst				Monitor temp space usage per instance
+temp_mon_sess					Monitor Temp segment usage per session.(if not specified find the most TEMP consuming sessions - write now!)
+temp_mon_sqlid					Monitor Temp segment usage per sql_id. (if not specified, find the most TEMP consuming sql_ids - write now!)	
+temptopn_ash_awr				Find the top N temp space cosnumers from DBA_HIST_ACTIVE_SESS_HISTORY in the history of interest. 
+									You can filter also by a specific sql_id and/or username
+tfd								Trace File Disable
+tfd_10g							Trace File Disable the old way (before 11g)
+tfe								Trace File Enable
+tfe_10g							Trace File Enable the old way (before 11g)
+tf_set_id						Set an identifier to the tracefile name in order to be able to locate it easily.
+tf_status						Tracing status (Find if tracing is enable or diabled for the current session)
+vpn_check						Check status of lonon trigger blocking VPN access to Exadata
+vst_tablesel					VST (Visual SQL Tuning). Get the selectivity for a specific filter condition on a table.
+wait_chains						Query on new fixed table V$WAIT_CHAINS in 11g
+xsess							Find the transactions of a specific session and report its status, start_time, undo block usage etc.
+x								(From Tanel Poder scripts) execution plan for last statement for this session from library cache...
+x_all							(From Tanel Poder Scripts) execution plan for last statement for this session from library cache. 
+								select * from table( dbms_xplan.display_cursor(null, null, 'ADVANCED +PEEKED_BINDS +ALLSTATS LAST +MEMSTATS LAST') );
+xp								Simple display of the execution plan, with minimum info(dbms_xplan.display_cursor format parameter 'ALLSTATS LAST')
+								for a specific cursor (sql_id and child number) or the last statement for this session from library cache. 
+								With this format directive ('ALLSTATS LAST') you can also see operation-level runtime statistics 
+								(e.g., STARTS, A-ROWS, A-TIME etc.), if the collection of these statistics has been enabled.
+xplan							Display the execution plan (dbms_xplan.display_cursor format parameter 'ALL ALLSTATS LAST -PROJECTION') for a specific cursor 
+								(sql_id and child number) or the last statement for this session from library cache
+xplan_all						Display the execution plan (dbms_xplan.display_cursor format parameter 'ADVANCED ALLSTATS LAST') for a specific cursor 
+								(sql_id and child number) or the last statement for this session from library cache
+xplan_b							Display the execution plan (dbms_xplan.display_cursor format parameter 'BASIC predicate') for a specific cursor 
+								(sql_id and child number) or the last statement for this session from library cache						
+xplan_awr						Display the execution plan  for a specific cursor (sql_id and child number) as well as hash_plan_value 
+								from AWR (dbms_xplan.display_awr format parameter ''ALL ALLSTATS LAST -PROJECTION')
+xplan_awr_all					Display the execution plan (display option ALL) for a specific cursor (sql_id and child number) as well as 
+								hash_plan_value  from AWR. (dbms_xplan.display_awr format option 'ADVANCED ALLSTATS LAST')
+xplan_baseline					Display the plans of a SQL Plan Baseline. You must provide as input the SQL handle, returned by DBA_SQL_PLAN_BASELINES
+xplan_rac						Display the execution plan for a specific cursor (sql_id and child number).
+									You dont have to explicitly log in to a specific instance (in a RAC), to find the execution plan in the library cache of a node. It uses 
+									gv$sql_plan_statistics_all as a plan_table input to DBMS_XPLAN.DISPLAY in order to get the execution plan in loaded in the library cache of any RAC instance.
+									(format parameter: 'ALL ALLSTATS LAST -PROJECTION')
+xplan_rac_b						Display the execution plan for a specific cursor (sql_id and child number).
+									You dont have to explicitly log in to a specific instance (in a RAC), to find the execution plan in the library cache of a node. It uses 
+									gv$sql_plan_statistics_all as a plan_table input to DBMS_XPLAN.DISPLAY in order to get the execution plan in loaded in the library cache of any RAC instance.
+									(format parameter: 'BASIC predicate')									
+xplan_rac_all					Display the execution plan (display option ADVANCED) for a specific cursor (sql_id and child number) or the last statement for this session from library cache
+									You dont have to explicitly log in to a specific instance (in a RAC), to find the execution plan in the library cache of a node. It uses 
+									gv$sql_plan_statistics_all as a plan_table input to DBMS_XPLAN.DISPLAY in order to get the execution plan in loaded in the library cache of any RAC instance.									
+									(format parameter: 'ADVANCED ALLSTATS LAST')
+xplan_stats						Return execution plan statistics by directly quering GV$SQL_PLAN_STATISTICS_ALL  
+								If STATISTICS_LEVEL is set to all (e.g. at the session level) - alter session set statistics_level = all;
+								or the hint /*+ gather_plan_statistics */ is used, then it returns also operation-level runtime statistics
+								(equivalent to dbms_xplan.display_cursor with an 'ALLSTATS LAST' format parameter)
+								Also note that the query must be completed in order to get these operation-level runtime statistics.
+								If not, then you just get the plan as it appears in v$sql_plan with no runtime statistics.
+xplan_stats_all					Query GV$SQL_PLAN_STATISTICS_ALL for a query run with /*+ gather_plan_statistics */ (http://datavirtualizer.com/power-of-display_cursor/)
+								that computes per plan operation: Elapsed time (secs), LIO_RATIO (logical I/Os per returned row, TCP_GRAPH (graphically shows the ratio of estimated rows to actual rows) 
+
