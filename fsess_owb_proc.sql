@@ -1,11 +1,4 @@
-------------------------------------------------------
---  fsess_owb_proc
---
---  Run script fsess_owb to select rows with a non-NULL value in "Problem / Action"
---  and insert results into a table (monitor_dw.fsess_owb).
---
-------------------------------------------------------
-create or replace procedure monitor_dw.fsess_owb_proc
+CREATE OR REPLACE procedure MONITOR_DW.fsess_owb_proc
 IS
     l_monthly_flow_ind  number;   
     l_dw_last_run_updated   number;
@@ -386,7 +379,7 @@ BEGIN
     for r in (
         select  snapshot_dt,
                 "Problem / Action",
-                case when "Problem / Action" in ('"LOW PERFORMANCE"','"OWB task in "BUSY" state, with no corresponding DB session (possible corruption) / Retry node from OWF Monitor"' ) then 'Dev STANDBY BI' ELSE 'AS Mediation Support' end WHO2CALL,
+                case when "Problem / Action" in ('"LOW PERFORMANCE"','"OWB task in "BUSY" state, with no corresponding DB session (possible corruption) / Retry node from OWF Monitor"' ) then 'Dev STANDBY BI' ELSE 'AS Provisioning Support' end WHO2CALL,
                 owb_flow,
                 owb_parent_flow,
                 username,
@@ -559,7 +552,7 @@ BEGIN
 END fsess_owb_proc;
 /
 
-CREATE OR REPLACE procedure monitor_dw.fsess_owb_send_mail (
+CREATE OR REPLACE procedure MONITOR_DW.fsess_owb_send_mail (
  msg_in in CLOB --varchar2
 )
 IS
@@ -572,12 +565,16 @@ IS
   l_recipient2  varchar2(50)    :=  'a.mantes@neurocom.gr';
   l_recipient2a varchar2(50)    :=  'd.psychogiopoulos@neurocom.gr';  
   l_recipient2b varchar2(50)    :=  'george.papoutsopoulos@oracle.com';  
-  l_recipient2c varchar2(50)    :=  'maria.apostolopoulou@relationalfs.com';    --'MavrakakisI@unisystems.gr';  
-  l_recipient2d varchar2(50)    :=  'TheodorakisJ@unisystems.gr';  
+  l_recipient2c varchar2(50)    :=  'as_provisioning_support@ote.gr';    --'MavrakakisI@unisystems.gr';  
+  l_recipient2d varchar2(50)    :=  'nkarag@ote.gr';  
   l_recipient2e varchar2(50)    :=  'l.alexiou@neurocom.gr';  
   l_recipient2f varchar2(50)    :=  'BachourosT@unisystems.gr';  
   l_recipient2g varchar2(50)    :=  'itoperators@ote.gr'; 
-  l_recipient2h varchar2(50)    :=  'as_mediation_support@ote.gr'; 
+  l_recipient2h varchar2(50)    :=  'nkarag@ote.gr'; -- 'as_mediation_support@ote.gr'; 
+  l_recipient2i varchar2(50)    :=  'eirini.charkianaki@relationalfs.com';  
+  l_recipient2j varchar2(50)    :=  'evkaknou@cosmote.gr';
+  l_recipient2k varchar2(50)    :=  'MavrodimitrakiK@unisystems.gr';      
+  l_recipient2l varchar2(50)    :=  'dimitris.kontogiannis@relationalfs.com';
   l_recipient3  varchar2(50)    :=  'fdw@ote.gr';
   l_recipient4  varchar2(50)    :=  'nkarag@ote.gr'; 
   mailhost  CONSTANT VARCHAR2(30) := '10.101.12.40';
@@ -604,6 +601,10 @@ begin
   UTL_smtp.rcpt(mail_conn, l_recipient2f);   
   UTL_smtp.rcpt(mail_conn, l_recipient2g);
   UTL_smtp.rcpt(mail_conn, l_recipient2h);  
+  UTL_smtp.rcpt(mail_conn, l_recipient2i);
+  UTL_smtp.rcpt(mail_conn, l_recipient2j);
+  UTL_smtp.rcpt(mail_conn, l_recipient2k);
+  UTL_smtp.rcpt(mail_conn, l_recipient2l);
   UTL_smtp.rcpt(mail_conn, l_recipient3);    
   UTL_smtp.rcpt(mail_conn, l_recipient4);
     
@@ -620,7 +621,7 @@ begin
   --dbms_output.put_line('SEND_MAIL_PROC :: Data opened');
 
   UTL_SMTP.write_data(mail_conn, 'Date: '     || TO_CHAR( SYSDATE, 'dd Mon yy hh24:mi:ss') || UTL_TCP.crlf);
-  UTL_SMTP.write_data(mail_conn, 'To: '       || l_recipient1||', ' || l_recipient2 ||', ' || l_recipient2a ||', ' || l_recipient2b ||', ' || l_recipient2c ||', ' || l_recipient2d ||', ' || l_recipient2e ||', ' || l_recipient2f ||', ' || l_recipient2g ||', ' || l_recipient2h
+  UTL_SMTP.write_data(mail_conn, 'To: '       || l_recipient1||', ' || l_recipient2 ||', ' || l_recipient2a ||', ' || l_recipient2b ||', ' || l_recipient2c ||', ' || l_recipient2d ||', ' || l_recipient2e ||', ' || l_recipient2f ||', ' || l_recipient2g ||', ' || l_recipient2h ||', ' || l_recipient2i ||', ' || l_recipient2j ||', ' || l_recipient2k || ', ' || l_recipient2l
                                               || UTL_TCP.crlf);
   UTL_SMTP.write_data(mail_conn, 'Cc: '       || l_recipient3 || UTL_TCP.crlf);
   UTL_SMTP.write_data(mail_conn, 'Bcc: '       || l_recipient4 || UTL_TCP.crlf);
@@ -669,65 +670,3 @@ begin
     --msg_status:='Error while sending Email: Error<'||herr||'>';END my_send_mail_gr
 END fsess_owb_send_mail;
 /
-
-
-/*
-
-===============================================================
-|                  Problem in DW Running Task
-|               -------------------------------
-|
-|   ***Problem / Action***: <problem / action>
-|
-|   OWB details
-|   -----------
-|   Main Flow:              <owb_flow>
-|   Username:               <username>
-|   Node Name:              <owb_name>
-|   Node Type:              <owb_type>
-|   Duration (mins) p80:    <owb_duration_mins>
-|   ***Duration (mins)***:  <duration_mins>
-|   Times exceeding p80:
-|
-|   DB session details
-|   -----------
-|   inst_id:    <inst_id>
-|   sid:        <sid>
-|   serial#:    <serial#>
-|   logon_time: <login_time>
-|
-|   SQL details
-|   -----------
-|   sql_id:     <sql_id>
-|   sql_child_number:
-|   sql_exec_start:
-|   plan_hash_value:
-|   sql_text:   
-|   Entry PL/SQL Proc:  <entry_plsql_proc>
-|
-|   Wait Event details
-|   -----------------
-|   Wait State:
-|   Wait Class:
-|   Wait Event:
-|   Seconds in Wait:    <secs_in_wait>  
-|
-|   Object Waiting-for details
-|   ----------------------------
-|   obj_owner:
-|   obj_name:
-|   obj_type:
-|
-|   Blocking Details
-|   -----------------
-|   blocking_instance:
-|   blocking_session:
-|   blocker:
-|   blocker_owb_node:
-|   blocker_main_flow:
-|   kill_blocker_stmnt:
-| 
-===============================================================
-
-
-*/
